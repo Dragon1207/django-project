@@ -4,6 +4,8 @@ from recipes.models import Recipe
 
 
 def home(request):
+    # recipes = get_list_or_404(Recipe.objects.filter(
+    #     is_published=True,).order_by('-id'))
     recipes = Recipe.objects.filter(is_published=True).order_by('-id')
     return render(request, 'recipes/pages/home.html', context={
         'recipes': recipes})
