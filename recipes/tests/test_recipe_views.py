@@ -53,7 +53,15 @@ class RecipeViewsTest(TestCase):
             preparation_steps_is_html=False,
             is_published=True,
         )
-        assert 1 == 1
+        response = self.client.get(reverse('recipes:home'))
+        content = response.content.decode('utf-8')
+        self.assertIn('Recipe Title', content)
+        self.assertIn('10 Minutos', content)
+        self.assertIn('5 Porções', content)
+        response_context_recipes = response.context['recipes']
+        self.assertEqual(len(response_context_recipes), 1)
+
+        pass
 
     def test_recipe_category_view_returns_404_if_no_recipes_found(self):
         response = self.client.get(
