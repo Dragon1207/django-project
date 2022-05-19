@@ -18,6 +18,8 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['email'], 'Your email here')
         add_placeholder(self.fields['first_name'], 'Ex.: Marshal')
         add_placeholder(self.fields['last_name'], 'Ex.: Mori')
+        # Adicionar atributos CSS no widget
+        add_attr(self.fields['username'], 'css', 'a-css-class')
 
     password = forms.CharField(
         required=True,
