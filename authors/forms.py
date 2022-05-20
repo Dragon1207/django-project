@@ -55,7 +55,7 @@ class RegisterForm(forms.ModelForm):
     password2 = forms.CharField(
         required=True,
         widget=forms.PasswordInput(),
-        label='Password2',
+        label='Password2'
     )
 
     class Meta:
