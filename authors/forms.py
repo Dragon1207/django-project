@@ -48,12 +48,14 @@ class RegisterForm(forms.ModelForm):
             'one lowercase letter and one number. The length should be '
             'at least 8 characters.'
         ),
-        validators=[strong_password]
+        validators=[strong_password],
+        label='Password',
     )
 
     password2 = forms.CharField(
         required=True,
-        widget=forms.PasswordInput()
+        widget=forms.PasswordInput(),
+        label='Password2',
     )
 
     class Meta:
@@ -65,15 +67,13 @@ class RegisterForm(forms.ModelForm):
             'email',
             'password',
         ]
-        # Para excluir alguns campos de todos
-        # exclude = ['first_name']
 
         labels = {
             'username': 'Username',
             'first_name': 'First name',
             'last_name': 'Last name',
             'email': 'E-mail',
-            'password': 'Password',
+
         }
         help_texts = {
             'email': 'The e-mail must be valid',
