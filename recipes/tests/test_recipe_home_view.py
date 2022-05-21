@@ -46,7 +46,7 @@ class RecipeHomeViewTest(RecipeTestBase):
         self.assertEqual(len(response_context_recipes), 1)
 
     def test_recipe_home_template_dont_load_recipes_not_published(self):
-        """tests if the is_published field is unchecked. 
+        """tests if the is_published field is unchecked.
            That means the recipe is not published
         """
         self.make_recipe(is_published=False)
@@ -72,3 +72,24 @@ class RecipeHomeViewTest(RecipeTestBase):
             self.assertEqual(len(paginator.get_page(1)), 3)
             self.assertEqual(len(paginator.get_page(2)), 3)
             self.assertEqual(len(paginator.get_page(3)), 3)
+
+    def test_invalid_page_query_uses_page_one(self):
+        for i in range(8):
+            kwargs = {'slug': f'r{i}', 'author_data': {'username': f'u{i}'}}
+            self.make_recipe(**kwargs)
+        with patch('recipes.views.PER_PAGE', new=3):
+            response = self.client.get(reverse('recipes:home') + '?page=1A')
+            self.assertEqual(
+                response.context['recipes'].number,
+                1
+            )
+            response = self.client.get(reverse('recipes:home') + '?page=2')
+            self.assertEqual(
+                response.context['recipes'].number,
+                2
+            )
+            response = self.client.get(reverse('recipes:home') + '?page=3')
+            self.assertEqual(
+                response.context['recipes'].number,
+                3
+            )
