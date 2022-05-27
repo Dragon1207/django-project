@@ -24,7 +24,8 @@ class AuthorRecipeForm(forms.ModelForm):
                 choices=(
                     ('Porções', 'Porções'),
                     ('Pedaços', 'Pedaços'),
-                    ('Pessoas', 'Pessoas')
+                    ('Pessoas', 'Pessoas'),
+                    ('Pratos', 'Pratos'),
                 )
             ),
             'preparation_time_unit': forms.Select(
