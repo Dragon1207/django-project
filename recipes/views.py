@@ -37,6 +37,10 @@ class RecipeListViewBase(ListView):
         return ctx
 
 
+class RecipeListViewHome(RecipeListViewBase):
+    template_name = 'recipes/pages/home.html'
+
+
 def home(request):
     recipes = Recipe.objects.filter(
         is_published=True,
