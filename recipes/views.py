@@ -6,7 +6,7 @@ from django.shortcuts import get_list_or_404, get_object_or_404, render
 from django.views.generic import ListView
 from utils.pagination import make_pagination
 
-from recipes.models import Recipe
+from recipes.models import Category, Recipe
 
 PER_PAGE = int(os.environ.get('PER_PAGE', 6))
 
@@ -39,6 +39,22 @@ class RecipeListViewBase(ListView):
 
 class RecipeListViewHome(RecipeListViewBase):
     template_name = 'recipes/pages/home.html'
+
+
+class RecipeListViewCategory(RecipeListViewBase):
+    template_name = 'recipes/pages/category.html'
+
+    def get_queryset(self, *args, **kwargs):
+        qs = super().get_queryset(*args, **kwargs)
+        qs = qs.filter(
+            category__id=self.kwargs.get('category_id'),
+            is_published=True,
+        )
+        return qs
+
+
+class RecipeListViewSearch(RecipeListViewBase):
+    ...
 
 
 def home(request):
