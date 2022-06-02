@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.forms.models import model_to_dict
 from django.http import Http404, JsonResponse
 from django.shortcuts import render
+from django.utils import translation
 from django.views.generic import DetailView, ListView
 from utils.pagination import make_pagination
 
@@ -41,8 +42,13 @@ class RecipeListViewBase(ListView):
             ctx.get('recipes'),
             PER_PAGE
         )
+        html_language = translation.get_language()
         ctx.update(
-            {'recipes': page_obj, 'pagination_range': pagination_range}
+            {
+                'recipes': page_obj,
+                'pagination_range': pagination_range,
+                'html_language': html_language,
+            }
         )
         return ctx
 
