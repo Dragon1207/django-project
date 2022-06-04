@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 
@@ -8,6 +9,10 @@ class RecipeSerializer(serializers.Serializer):
     public = serializers.BooleanField(source='is_published')
     preparation = serializers.SerializerMethodField(
         method_name='any_method_name'
+    )
+    category = serializers.StringRelatedField()
+    author = serializers.PrimaryKeyRelatedField(
+        queryset=User.objects.all()
     )
 
     def any_method_name(self, recipe):
