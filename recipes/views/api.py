@@ -16,8 +16,14 @@ def recipe_api_list(request):
             context={'request': request},
         )
         return Response(serializer.data)
-    else:
-        return Response('POST', status=status.HTTP_201_CREATED)
+    elif(request.method == 'POST'):
+        serializer = RecipeSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+        return Response(
+            serializer.validated_data,
+            status=status.HTTP_201_CREATED
+        )
 
 
 @api_view()
