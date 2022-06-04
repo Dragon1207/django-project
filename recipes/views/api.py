@@ -8,7 +8,11 @@ from rest_framework.response import Response
 @api_view()
 def recipe_api_list(request):
     recipes = Recipe.objects.get_published()[:10]
-    serializer = RecipeSerializer(instance=recipes, many=True)
+    serializer = RecipeSerializer(
+        instance=recipes,
+        many=True,
+        context={'request': request},
+    )
     return Response(serializer.data)
 
 
@@ -18,5 +22,9 @@ def recipe_api_detail(request, pk):
         Recipe.objects.get_published(),
         pk=pk
     )
-    serializer = RecipeSerializer(instance=recipe, many=False)
+    serializer = RecipeSerializer(
+        instance=recipe,
+        many=False,
+        context={'request': request},
+    )
     return Response(serializer.data)
