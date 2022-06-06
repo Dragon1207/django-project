@@ -2,7 +2,7 @@ from django.urls import include, path
 from rest_framework.routers import SimpleRouter
 
 from recipes import views
-from recipes.views import api, site
+from recipes.views import site
 
 app_name = 'recipes'
 
